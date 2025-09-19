@@ -9,7 +9,7 @@
 ```
 robot-tests/
 │── variables/
-│   └── global_variables.robot    # การกำหนดค่าส่วนกลาง (BASE_URL, browser, credentials)
+│   └── global_variables.robot    # การกำหนดค่าตัวแปรต่างๆ (BASE_URL, browser, credentials)
 │
 │── resources/
 │   ├── Common.robot              # คีย์เวิร์ดทั่วไป (เช่น การทำงานของเบราว์เซอร์, การนำทางหน้า)
