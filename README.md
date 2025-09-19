@@ -55,7 +55,7 @@ robot-tests/
             Close Browser
 
       ```
-3. **`robot-tests/RegisterPage.robot`**:
+3. **`robot-tests/resources/RegisterPage.robot`**:
     ```robotframework
         *** Settings ***
         Resource    Common.robot
