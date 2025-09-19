@@ -1,0 +1,190 @@
+/* Navbar Buttons */
+.nav-btn-login {
+    background: linear-gradient(135deg, #007bff, #00c6ff);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #00c6ff, #007bff);
+}
+
+.nav-btn-register {
+    background: linear-gradient(135deg, #2c7c78, #00c6ff);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-btn-register:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #57d88d, #65faff);
+}
+
+/* Modal Background */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeInOverlay 0.3s ease-in-out;
+}
+
+/* Modal Box */
+.modal-content {
+    background: #fff;
+    padding: 35px 30px;
+    border-radius: 12px;
+    width: 420px;
+    max-width: 90%;
+    position: relative;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+    animation: fadeIn 0.3s ease-in-out;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Close Button */
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 1.8rem;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.modal-close:hover {
+    color: #ff4d4f;
+}
+
+/* Form */
+.modal-content h2 {
+    margin-bottom: 25px;
+    color: #007bff;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.modal-content form div {
+    margin-bottom: 18px;
+}
+
+.modal-content label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-content input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Submit Button */
+.modal-content button[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border: none;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #20c997, #28a745);
+}
+
+/* Message Box */
+.message {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #e9f7ef;
+    color: #155724;
+    border: 1px solid #d4edda;
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+/* Links */
+.modal-content p {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.modal-content a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.modal-content a:hover {
+    text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInOverlay {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
