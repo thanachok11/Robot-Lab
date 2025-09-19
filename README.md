@@ -46,57 +46,97 @@ robot-tests/
 
 2.  **`robot-tests/resources/Common.robot`**:
     *   อัปเดต `Open Browser To Register Page` และ `Open Browser To Login Page` เพื่อใช้ URL ที่ถูกต้อง:
-        ```robotframework
+      ```robotframework
+        *** Settings ***
+        Library    SeleniumLibrary
+        
+        *** Keywords ***
+        Close Browser Session
+            Close Browser
+
+      ```
+3. **`robot-tests/RegisterPage.robot`**:
+    ```robotframework
+        *** Settings ***
+        Resource    Common.robot
+        
+        *** Keywords ***
         Open Browser To Register Page
             Open Browser    ${BASE_URL}/register    ${BROWSER}
             Maximize Browser Window
-            Wait Until Page Contains    Register
+        
+        Fill Register Form
+            [Arguments]    ${firstname}    ${lastname}    ${email}    ${password}
+            Input Text    id=firstName    ${firstname}
+            Input Text    id=lastName     ${lastname}
+            Input Text    id=email        ${email}
+            Input Text    id=password     ${password}
+        
+        Submit Registration
+            Click Button    xpath=//button[contains(text(),'สมัครสมาชิก')]
+        
+        Verify Registration Success
+            Wait Until Page Contains    ยินดีต้อนรับ
 
+
+    ```
+
+4. **`robot-tests/resources/LoginPage.robot`**:
+    ```robotframework
+        *** Settings ***
+        Resource    Common.robot
+        
+        *** Keywords ***
         Open Browser To Login Page
             Open Browser    ${BASE_URL}/login    ${BROWSER}
             Maximize Browser Window
-            Wait Until Page Contains    Login
-        ```
+        
+        Input Credentials
+            [Arguments]    ${email}    ${password}
+            Input Text    id=email    ${email}
+            Input Text    id=password    ${password}
+        
+        Submit Login
+            Click Button    xpath=//button[contains(text(),'เข้าสู่ระบบ')]
 
-3.  **ไฟล์ทรัพยากรเฉพาะหน้า (`RegisterPage.robot`, `LoginPage.robot`, `DashboardPage.robot`)**:
-    *   **เพิ่มการรอ:** สิ่งสำคัญคือต้องเพิ่ม `Wait Until Element Is Visible` หรือ `Wait Until Page Contains Element` ก่อนที่จะโต้ตอบกับองค์ประกอบเพื่อให้แน่ใจว่า DOM พร้อมแล้ว
-        *   ตัวอย่าง (`RegisterPage.robot`):
-            ```robotframework
-            Fill Register Form
-                [Arguments]    ${firstname}    ${lastname}    ${email}    ${password}
-                Wait Until Element Is Visible    id=firstName    10s
-                Input Text    id=firstName    ${firstname}
-                Input Text    id=lastName     ${lastname}
-                Input Text    id=email        ${email}
-                Input Text    id=password     ${password}
-            ```
-    *   **ตัวเลือกองค์ประกอบ:** ตรวจสอบให้แน่ใจว่าตัวเลือก `id=` หรือ `xpath=` กำหนดเป้าหมายองค์ประกอบในแอปพลิเคชัน React ได้อย่างถูกต้อง
-        *   **IDs ของฟอร์มลงทะเบียน:** `firstName`, `lastName`, `email`, `password`
-        *   **IDs ของฟอร์มเข้าสู่ระบบ:** `loginEmail`, `loginPassword`
-        *   **ID ชื่อผู้ใช้แดชบอร์ด:** `dashboard-username`
+    ```
 
-**`robot-tests/resources/LoginPage.robot`** (ตัวอย่าง)
+5.  **`robot-tests/resources/DashboardPage.robot`**:
+    ```robotframework
+        *** Settings ***
+        Resource    Common.robot
+        
+        *** Keywords ***
+        Verify Dashboard Page
+            Wait Until Page Contains    Dashboard
+            Log    User is on Dashboard page
 
-```robotframework
-*** Settings ***
-Library    SeleniumLibrary
-
-*** Keywords ***
-Fill Login Form
-    [Arguments]    ${email}    ${password}
-    Wait Until Element Is Visible    id=loginEmail    10s
-    Input Text    id=loginEmail     ${email}
-    Input Text    id=loginPassword  ${password}
-
-Click Login Button
-    Wait Until Element Is Clickable    xpath=//button[contains(text(),'Login')]
-    Click Button    xpath=//button[contains(text(),'Login')]
-
-Verify Successful Login
-    Wait Until Page Contains Element    id=dashboard-username    10s
-    Page Should Contain Element    id=dashboard-username
-```
-
+    ```
+6. **`robot-tests/resources/full_flow_test.robot`**:
+    ```robotframework
+        *** Settings ***
+        Resource    ../resources/RegisterPage.robot
+        Resource    ../resources/LoginPage.robot
+        Resource    ../resources/DashboardPage.robot
+        Resource    ../variables/global_variables.robot
+        
+        *** Test Cases ***
+        Full Flow: Register → Login → Dashboard
+            [Documentation]    สมัครสมาชิกใหม่, เข้าสู่ระบบ และตรวจ Dashboard
+            # --- Register ---
+            Open Browser To Register Page
+            Fill Register Form    ${FIRST_NAME}    ${LAST_NAME}    ${NEW_EMAIL}    ${VALID_PASSWORD}
+            Submit Registration
+            Verify Registration Success
+            Close Browser Session
+        
+            # --- Login ---
+            Open Browser To Login Page
+            Input Credentials    ${NEW_EMAIL}    ${VALID_PASSWORD}
+            Submit Login
+            Verify Dashboard Page
+            Close Browser Session
+    ```
 หากไฟล์นี้ไม่มีอยู่ในโปรเจกต์ของคุณ คุณจะต้องสร้างมันขึ้นมาตามโครงสร้างที่แนะนำครับ
 ### การรัน Robot Framework Tests
 
