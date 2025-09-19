@@ -14,7 +14,10 @@ mongoose.connect(MONGO_URI)
     .catch(err => console.error(err));
 
 // Middleware
-app.use(cors()); // Allow requests from frontend
+app.use(cors({
+    origin: 'https://robot-lab-five.vercel.app', // frontend
+    optionsSuccessStatus: 200
+}));
 app.use(express.json()); // Body parser
 
 // Routes
