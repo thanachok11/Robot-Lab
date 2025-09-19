@@ -8,17 +8,23 @@ const RegisterForm = ({ onRegisterSuccess, onClose }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [success, setSuccess] = useState(false); // สำหรับข้อความสำเร็จ
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage('');
         const data = await registerUser({ firstName, lastName, email, password });
         if (data.token) {
-            setMessage('Registration successful!');
+            setSuccess(true);
+            setMessage('Registration successful! Welcome, ' + data.firstName + '!');
             localStorage.setItem('userToken', data.token);
             localStorage.setItem('userName', data.firstName);
             onRegisterSuccess(data.firstName);
-            onClose(); // ปิด modal เมื่อสมัครเสร็จ
+
+            // delay 3 วินาที ก่อนปิด modal
+            setTimeout(() => {
+                onClose();
+            }, 3000);
         } else {
             setMessage(data.message || 'Registration failed.');
         }
@@ -72,7 +78,12 @@ const RegisterForm = ({ onRegisterSuccess, onClose }) => {
                     </div>
                     <button type="submit">Register</button>
                 </form>
-                {message && <p className="message">{message}</p>}
+
+                {message && (
+                    <p className={`message ${success ? 'success' : 'error'}`}>
+                        {message}
+                    </p>
+                )}
             </div>
         </div>
     );

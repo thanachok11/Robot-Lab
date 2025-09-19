@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import "../LandingPage.css";
@@ -7,18 +6,14 @@ import "../LandingPage.css";
 const LandingPage = () => {
     const [showLogin, setShowLogin] = useState(false);
     const [showRegister, setShowRegister] = useState(false);
-    const navigate = useNavigate();
 
     const handleLoginSuccess = (name) => {
         console.log("Login Success:", name);
-        setShowLogin(false);
-        navigate("/dashboard"); // ไปหน้า dashboard หลัง login
+
     };
 
     const handleRegisterSuccess = (name) => {
         console.log("Register Success:", name);
-        setShowRegister(false);
-        navigate("/dashboard"); // ไปหน้า dashboard หลัง register
     };
 
     return (

@@ -1,5 +1,5 @@
 // สมมติว่าใช้ fetch API
-const API_BASE_URL = 'http://localhost:8080/api/auth';
+const API_BASE_URL = 'https://robot-lab.onrender.com/api/auth';
 
 export const registerUser = async (userData) => {
     const response = await fetch(`${API_BASE_URL}/register`, {

@@ -1,26 +1,38 @@
 import React, { useState } from 'react';
 import { loginUser } from '../api/auth';
+import { useNavigate } from "react-router-dom";
+
 import '../Auth.css';
 
 const LoginForm = ({ onLoginSuccess, onClose }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [success, setSuccess] = useState(false); // สำหรับข้อความสำเร็จ
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage('');
         const data = await loginUser({ email, password });
         if (data.token) {
-            setMessage('Login successful!');
+            setSuccess(true);
+            setMessage('Login successful! Welcome, ' + data.firstName + '!');
             localStorage.setItem('userToken', data.token);
             localStorage.setItem('userName', data.firstName);
             onLoginSuccess(data.firstName);
-            onClose(); // ปิด modal หลังจาก login สำเร็จ
+
+            // delay 3 วิ ก่อนปิด modal และไป dashboard
+            setTimeout(() => {
+                onClose();
+                navigate("/dashboard");
+            }, 3000);
         } else {
+            setSuccess(false);
             setMessage(data.message || 'Login failed.');
         }
     };
+
 
     return (
         <div className="modal-overlay">
@@ -50,7 +62,12 @@ const LoginForm = ({ onLoginSuccess, onClose }) => {
                     </div>
                     <button type="submit">Login</button>
                 </form>
-                {message && <p className="message">{message}</p>}
+
+                {message && (
+                    <p className={`message ${success ? 'success' : 'error'}`}>
+                        {message}
+                    </p>
+                )}
             </div>
         </div>
     );
